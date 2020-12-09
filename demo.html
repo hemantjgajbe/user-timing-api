@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <meta name="author" content="Aurelio De Rosa">
+   <title>User Timing API</title>
+</head>
+<script>
+
+   /** Example 1 - Start of performance.now() function **/
+   const firstNow = performance.now();
+
+   // This loop is just to simulate slow calculations
+   for (let i = 0; i < 1000000; i++) {
+      Math.sqrt(i)
+   }
+   const secondNow = performance.now();
+
+   const differenceInNowTime = secondNow - firstNow;
+   console.log("Current load time", firstNow);
+   console.log("After execution of square root calculation", secondNow);
+   console.log("Time difference between initial load and end of loop execution", differenceInNowTime);
+   /** End of Example 1**/
+
+   /** Example 2 - Start of performance.mark **/
+   performance.mark('startLoop');
+
+   // This loop is just to simulate slow calculations
+   for (let i = 0; i < 1000000; i++) {
+      Math.sqrt(i);
+   }
+
+   performance.mark('endLoop');
+
+   // We create a new entry called measureDifference which combines our two marks
+   performance.measure('measureDifference', 'startLoop', 'endLoop');
+
+   console.log("mark on start loop", performance.getEntriesByName('startLoop'));
+   console.log("mark on end loop", performance.getEntriesByName('endLoop'));
+   console.log("measure the mark difference", performance.getEntriesByName('measureDifference'));
+   /** End of Example 2 **/
+
+</script>
+
+<body>
+   <h3>Example of User Timing API</h3>
+</body>
+
+</html>
